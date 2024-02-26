@@ -35,7 +35,7 @@ async function insertarDatosReddit(posts) {
             }
         }));
 
-        console.log(`Datos de Reddit insertados correctamente. Nuevos: ${nuevosPosts}, Editados: ${postsEditados}`);
+        console.log(`Posts de Reddit insertados correctamente. Nuevos: ${nuevosPosts}, Editados: ${postsEditados}`);
     } catch (error) {
         console.error('Error al insertar datos de Reddit:', error);
     } finally {
