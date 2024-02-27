@@ -12,8 +12,6 @@ const pool = new Pool({
 // Función para insertar datos de Reddit en la base de datos
 async function insertarDatosReddit(posts) {
     const client = await pool.connect();
-    let nuevosPosts = 0;
-    let postsEditados = 0;
 
     try {
         await Promise.all(posts.map(async (post) => {
@@ -23,25 +21,20 @@ async function insertarDatosReddit(posts) {
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                 ON CONFLICT (id) DO UPDATE
                 SET score = EXCLUDED.score, time_edited = CURRENT_TIMESTAMP AT TIME ZONE 'UTC' AT TIME ZONE '-03'
-                RETURNING time_edited; -- Retorna el valor de time_edited después de la actualización
+                RETURNING time_edited;
             `;
             const values = [id, title, subreddit, selftext, thumbnail, score, url, time_created];
-            const result = await client.query(query, values);
-
-            if (result.rowCount === 1 && result.rows[0].time_edited) {
-                postsEditados++;
-            } else {
-                nuevosPosts++;
-            }
+            await client.query(query, values);
         }));
 
-        console.log(`Posts de Reddit insertados correctamente. Nuevos: ${nuevosPosts}, Editados: ${postsEditados}`);
+        console.log(`Posts de Reddit insertados correctamente.`);
     } catch (error) {
         console.error('Error al insertar datos de Reddit:', error);
     } finally {
         client.release();
     }
 }
+
 
 // Función principal que será invocada
 async function submitRedditChile() {
@@ -68,14 +61,14 @@ exports.submitRedditChile = async (req, res) => {
         const redditPosts = await fetchDataReddit(subreddits);
 
         // Insertar los datos en la base de datos
-        const { nuevosPosts, postsEditados } = await insertarDatosReddit(redditPosts);
-
-        res.status(200).send(`Proceso completado exitosamente. Nuevos Posts: ${nuevosPosts}, Editados: ${postsEditados}`);
+        await insertarDatosReddit(redditPosts);
+        res.status(200).send('Correcto')
     } catch (error) {
         console.error('Error en el proceso:', error);
         res.status(500).send('Error en el proceso');
     }
 };
 */
+
 // Llama a la función principal para iniciar el proceso
 submitRedditChile();
