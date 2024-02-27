@@ -77,4 +77,4 @@ exports.submitRedditChile = async (req, res) => {
 };
 
 // Llama a la función principal para iniciar el proceso
-submitRedditChile();
+//submitRedditChile();
