@@ -35,7 +35,7 @@ async function insertarDatosReddit(posts) {
     }
 }
 
-
+/*
 // Función principal que será invocada
 async function submitRedditChile() {
     try {
@@ -51,9 +51,8 @@ async function submitRedditChile() {
         console.error('Error en el proceso:', error);
     }
 }
+*/
 
-
-/*
 exports.submitRedditChile = async (req, res) => {
     try {
         // Obtener datos de Reddit
@@ -62,13 +61,14 @@ exports.submitRedditChile = async (req, res) => {
 
         // Insertar los datos en la base de datos
         await insertarDatosReddit(redditPosts);
-        res.status(200).send('Correcto')
+        console.log('Corrrreeeeectisimo');
+        res.status(200).send('Correcto');
     } catch (error) {
         console.error('Error en el proceso:', error);
         res.status(500).send('Error en el proceso');
     }
 };
-*/
+
 
 // Llama a la función principal para iniciar el proceso
-submitRedditChile();
+//submitRedditChile();

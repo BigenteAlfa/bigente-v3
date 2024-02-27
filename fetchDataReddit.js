@@ -7,6 +7,9 @@ async function fetchDataReddit(subreddits) {
 
         try {
             const response = await fetch.default(url);
+
+            console.log(`Respuesta para el subreddit ${subreddit}:`, response);
+
             const data = await response.json();
 
             data.data.children.forEach(post => {
