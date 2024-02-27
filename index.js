@@ -46,7 +46,7 @@ async function submitRedditChile() {
         // Insertar los datos en la base de datos
         await insertarDatosReddit(redditPosts);
 
-        console.log('Proceso completado exitosamente');
+        console.log('Proceso completado exitosamentee');
     } catch (error) {
         console.error('Error en el proceso:', error);
     }
