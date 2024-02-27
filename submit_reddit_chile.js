@@ -44,7 +44,7 @@ async function insertarDatosReddit(posts) {
 }
 
 // Función principal que será invocada
-async function submitRedditChile() {
+/*async function submitRedditChile() {
     try {
         // Obtener datos de Reddit
         const subreddits = ['chile', 'RepublicadeChile', 'Santiago', 'ChileIT', 'Chilefit'];
@@ -58,6 +58,23 @@ async function submitRedditChile() {
         console.error('Error en el proceso:', error);
     }
 }
+*/
+
+exports.submitRedditChile = async (req, res) => {
+    try {
+        // Obtener datos de Reddit
+        const subreddits = ['chile', 'RepublicadeChile', 'Santiago', 'ChileIT', 'Chilefit'];
+        const redditPosts = await fetchDataReddit(subreddits);
+
+        // Insertar los datos en la base de datos
+        const { nuevosPosts, postsEditados } = await insertarDatosReddit(redditPosts);
+
+        res.status(200).send(`Proceso completado exitosamente. Nuevos Posts: ${nuevosPosts}, Editados: ${postsEditados}`);
+    } catch (error) {
+        console.error('Error en el proceso:', error);
+        res.status(500).send('Error en el proceso');
+    }
+};
 
 // Llama a la función principal para iniciar el proceso
 submitRedditChile();
